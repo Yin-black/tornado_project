@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block title %}indext页{% end %}
+
+{% block content %}这是index页<br>
+{% for num in range(1,6) %}
+<a href="{{ static_url('images/{}.jpg'.format(num)) }}"  target="_blank" cursor=" pointer">
+<img src= "{{ static_url('images/{}.jpg'.format(num)) }}" width="500px" height="500px" />
+</a>
+{% end %}
+{% end %}
