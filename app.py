@@ -10,7 +10,8 @@ class Application(tornado.web.Application):
         handlers= [
             (r'/',main.IndexHandler),
             (r'/post/(?P<post_id>[0-9]+)',main.PostHandler),
-            (r'/explore',main.ExploreHandler)
+            (r'/explore',main.ExploreHandler),
+            (r'/upload',main.UploadHandler),
         ]
         settings =dict(
             static_path= 'static',

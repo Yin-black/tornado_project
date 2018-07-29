@@ -3,9 +3,9 @@
 {% block title %}explore页{% end %}
 
 {% block content %}这是explore页<br>
-{% for num in range(1,6) %}
-<a href="{{ static_url('images/{}.jpg'.format(num)) }}" cursor=" pointer" >
-<img src= "{{ static_url('images/{}.jpg'.format(num)) }}" width="100px" height="100px" />
+{% for num in img_num %}
+<a href="{{ static_url(num) }}" cursor=" pointer" >
+<img src= "{{ static_url(num) }}" width="100px" height="100px" />
 </a>
 {% end %}
 
