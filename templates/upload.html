@@ -4,8 +4,10 @@
 
 {% block content %}这是upload页<br>
 <form action="/upload" enctype="multipart/form-data" method="post">
-    <input type="file" name="newimg">
-    <input type="submit">
+    <div style="background-color: deepskyblue;width: 200px">
+        <input type="file" name="newimg" style="width:150px"><br>
+        <input type="submit">
+    </div>
 </form>
 
 {% end %}
