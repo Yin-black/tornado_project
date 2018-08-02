@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}regist页{% end %}
+
+{% block content %}这是regist页<br>
+<div>
+    <form method="post" enctype="multipart/form-data" action="/regist">
+    <div>
+        Regist Username<input type="text" name="username" placeholder="Please input User name" width="300"><br>
+    </div>
+    <div>
+        Regist Password1&nbsp<input type="password" name="password1" placeholder="Please input Password" width="300"><br>
+        Regist Password2&nbsp<input type="password" name="password2" placeholder="Please input Password agin" width="300"><br>
+    </div>
+    <div>
+        <input type="submit">
+    </div>
+    </form>
+</div>
+{% end %}
