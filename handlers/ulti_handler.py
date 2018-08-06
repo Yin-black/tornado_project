@@ -1,5 +1,6 @@
-from utils.autho_press import User_Info
+from utils.autho_press import UserInfo
 from handlers.main import Base
+import time
 
 class LoginHandler(Base):
     """
@@ -12,9 +13,9 @@ class LoginHandler(Base):
     def post(self, *args, **kwargs):
         username = self.get_argument('username', None)
         password = self.get_argument('password', None)
-        next_url = self.get_argument('next', '')  #校验用户名和密码
-        passed = User_Info.Virity_User(username, password)
-
+        next_url = self.get_argument('next', '')
+        #校验用户名和密码
+        passed = UserInfo.virity_user(username, password)
         if passed:
             self.session.set('s_user',username)
             if next_url:
@@ -43,16 +44,21 @@ class RegistHandler(Base):
         R_password2 = self.get_argument('password2', None)
 
         if R_username and R_password1 and (R_password1 == R_password2):
-            result = User_Info.Reg_User(R_username,R_password1)
+            result = UserInfo.reg_user(R_username,R_password1)
             if result:
                 self.write('注册成功!')
+                time.sleep(1)
                 self.session.set('s_user',R_username)
                 self.redirect(r'/')
             else:
                 self.write('用户名已注册，请选择其它用户名')
+                time.sleep(2)
                 self.redirect(r'/regist')
+
 
         else:
             self.write('用户名不能为空或两次密码输入不一致！')
+            time.sleep(2)
+            self.redirect(r'/regist')
 
 

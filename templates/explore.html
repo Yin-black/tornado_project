@@ -4,8 +4,8 @@
 
 {% block content %}这是explore页<br>
 {% for num in img_num %}
-<a href="{{ static_url(num) }}" cursor=" pointer" >
-<img src= "{{ static_url(num) }}" width="100px" height="100px" />
+<a href="{{ static_url(num[0]) }}" cursor=" pointer" >
+<img src= "{{ static_url(num[1]) }}" width="200px" height="200px" />
 </a>
 {% end %}
 
