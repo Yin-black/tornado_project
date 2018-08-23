@@ -1,9 +1,10 @@
 from utils.Sql_Session import Sql_Base,Session
 from sqlalchemy import Column,String,Integer,ForeignKey
 from sqlalchemy.orm import relationship
-from utils.autho_press import UserInfo
+from utils.autho_press import UserInfo,Like
 import uuid
 import os
+from PIL import Image
 
 
 class Post(Sql_Base):
@@ -18,9 +19,19 @@ class Post(Sql_Base):
     @classmethod
     def selec_thumbs_url(cls,userid):
         """
-        从数据库取所有的upolad和缩略图地址
+        从数据库取upolad和缩略图地址
         """
-        return Session.query(Post.imgurl, Post.thumbsurl).filter(Post.user_id ==userid).all()
+        if userid:
+            return Session.query(Post.imgurl, Post.thumbsurl,Post.imgid).filter(Post.user_id == userid).all()
+        else:
+            return Session.query(Post.imgurl, Post.thumbsurl,Post.imgid).all()
+
+    @classmethod
+    def selec_all_url(cls):
+        """
+        从数据库取所有的信息
+        """
+        return Session.query(Post.imgid,Post.imgurl, Post.thumbsurl).all()
 
     @classmethod
     def get_current_user_id(cls,user_name):
@@ -48,7 +59,23 @@ class Post(Sql_Base):
             获取图片upload图片url
             """
         return Session.query(cls.imgurl).filter(cls.imgid== id).first()
+    @classmethod
+    def get_thumbs_url(cls,id):
+        """
+        取thumbs_url
+        """
+        return Session.query(cls.thumbsurl).filter(cls.imgid == id).all()
 
+    @classmethod
+    def get_like_users(cls,id):
+        """
+        取喜欢此图片的用户信息
+        """
+        return Session.query(UserInfo).filter(Like.post_id == id,UserInfo.id == Like.user_id).all()
+    @classmethod
+    def get_post_name(cls,id):
+
+        return Session.query(UserInfo).filter(Post.user_id ==UserInfo.id,Post.imgid ==id).all()
 
 
 
@@ -78,7 +105,7 @@ class PostUrl():
         return os.path.join(self.upload_addr, self.thumbs_addr, self.name+ext)
 
     @classmethod
-    def save_post_img(cls,static_url,post_url,post_file_name,content):
+    def save_post_img(cls,static_url,post_url,content):
         """
         保存post的图片到uploads文件夹
         """
@@ -88,13 +115,15 @@ class PostUrl():
             f.write(content)
 
     @classmethod
-    def save_thumbs_img(cls,static_url,thumbs_url,post_file_name,content):
+    def save_thumbs_img(cls,static_url,thumbs_url,post_url,content):
         """
         保存成thubms图片
         """
         # file, ext = os.path.splitext(post_file_name)
-        with open(static_url+'/'+thumbs_url, 'wb') as f:
-            f.write(content)
+
+        img = Image.open(static_url+'/'+post_url)
+        img.thumbnail((200, 200))
+        img.save(static_url+'/'+thumbs_url, "JPEG")
 
     @classmethod
     def save_sql_url(cls,user_id,post_url,thumbs_url):

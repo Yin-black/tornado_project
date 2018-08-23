@@ -2,12 +2,13 @@
 
 {% block title %}Upload页{% end %}
 
-{% block content %}这是upload页<br>
-<form action="/upload" enctype="multipart/form-data" method="post">
-    <div style="background-color: deepskyblue;width: 200px">
-        <input type="file" name="newimg" style="width:150px"><br>
-        <input type="submit">
+{% block content %}
+    <div class="form-group">
+        <form action="/upload" enctype="multipart/form-data" method="post">
+            <label for="exampleInputFile">上传图片</label>
+            <input type="file" name="newimg" class="form-control-file" id="exampleInputFile" aria-describedby="fileHelp">
+            <small id="fileHelp" class="form-text text-muted">请选择JPG格式的图片文件</small>
+            <input class="btn btn-success" style="font-size: 16px;height: 38px;width: 100px" type="submit" id="submit" value="上传图片">
+        </form>
     </div>
-</form>
-
 {% end %}

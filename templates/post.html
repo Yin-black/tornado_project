@@ -1,9 +1,21 @@
 {% extends 'base.html' %}
 
-{% block title %}post页{% end %}
+{% block title %}详情页{% end %}
 
-{% block content %}这是post页<br>
+{% block content %}
 
 <img src= "{{ static_url(img_url) }}" />
+<div class="row">
+    <div class="col">
+        <span class="h4">由 {{ post_name[0].username }} 用户上传</span>
+        <i class='fas fa-heartbeat' style='color: rgb(0,0,0)' id="like"></i><br>
 
+            <span class="h4">标记喜欢的用户：{{ len(users) }} 人</span>
+            {% for u in users %}
+                <a href="/profile?id={{ u.id }}"> {{ u.username }}</a>
+            {% end %}
+
+    </div>
+</div>
+<script src="{{ static_url('js/likepost.js') }}"></script>
 {% end %}

@@ -2,10 +2,16 @@
 
 {% block title %}indext页{% end %}
 
-{% block content %}这是index页<br>
-{% for num in range(1,6) %}
-<a href="{{ static_url('images/{}.jpg'.format(num)) }}"  target="_blank" cursor=" pointer">
-<img src= "{{ static_url('images/{}.jpg'.format(num)) }}" width="500px" height="500px" />
-</a>
+{% block content %}
+<div class="row" >
+    <div class="col-md-10">
+            {% for num in img_num %}
+            <a href="/post/{{ num[0] }}" cursor=" pointer" >
+                <img src= "{{ static_url(num[1]) }}" width="200px" height="200px" />
+            </a>
+            {% end %}
+
+  </div>
+</div>
 {% end %}
-{% end %}
+

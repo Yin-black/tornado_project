@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}profile页{% end %}
+
+{% block content %}
+    <div class="row">{{ current_user }}上传的图片
+    </div>
+    <div class="row">
+
+        {% if post_img_url !=''%}
+            {% for url in post_img_url %}
+                <img class="img-thumbnail" src="{{ static_url(url[1]) }}">
+            {% end %}
+        {% end %}
+    </div>
+    <div class="row">喜欢的图片
+    </div>
+    <div class="row">
+
+        {% if like_url %}
+            {% for url in like_url %}
+                <img class="img-thumbnail" src="{{ static_url(url) }}">
+            {% end %}
+        {% end %}
+
+    </div>
+
+{% end %}

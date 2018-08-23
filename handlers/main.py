@@ -2,6 +2,7 @@ from tornado.web import RequestHandler,authenticated
 from pycket.session import SessionMixin
 from utils.post_press import Post,PostUrl
 from utils.autho_press import Like
+import redis
 
 
 class Base(RequestHandler,SessionMixin):
@@ -85,8 +86,9 @@ class ProfileHandler(Base):
     """
     @authenticated
     def get(self):
-        id = self.get_argument('id',None)
+        id = self.get_argument('id','')
         like_url_list=[]
+        img_id_list =[]
         if id:
            userid = id
         else:
@@ -97,10 +99,13 @@ class ProfileHandler(Base):
         post_img_url = Post.selec_thumbs_url(userid)   #获取上传图片的缩略图地址
 
         img_id = Like.get_post_id(userid) #获取喜欢图片的地址，返回列表
+
         for id in img_id:
             for i in id:
-                a_list = Post.get_thumbs_url(i) # 通过img_id取缩略图地址,返回一个列表
-                for j in a_list:
-                    for k in j:
-                        like_url_list.append(k)
+                if i:
+                    a_list = Post.get_thumbs_url(i) # 通过img_id取缩略图地址,返回一个列表
+                    for j in a_list:
+                        for k in j:
+                            like_url_list.append(k)
+        print(post_img_url,like_url_list)
         self.render('profile.html',post_img_url=post_img_url,like_url=like_url_list)

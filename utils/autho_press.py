@@ -1,7 +1,9 @@
-from sqlalchemy import Column,Integer,DateTime,String
+from sqlalchemy import Column,Integer,DateTime,String,ForeignKey
 from datetime import datetime
 import hashlib
 from utils.Sql_Session import Sql_Base,Session
+from sqlalchemy.orm import relationship
+
 
 class UserInfo(Sql_Base):
     """
@@ -41,5 +43,14 @@ class UserInfo(Sql_Base):
         Session.commit()
         return True
 
+class Like(Sql_Base):
+    __tablename__ = 'likes'
+    user_id = Column(Integer,ForeignKey('user_info.id'),nullable=True,primary_key=True)
+    post_id = Column(Integer,ForeignKey('postname.imgid'),nullable=True,primary_key=True)
 
+    # likes = relationship('UserInfo',backref = 'likes_link',secondary = 'Like')
 
+    @classmethod
+    def get_post_id(cls,user_id):
+        post_id = Session.query(cls.post_id).filter(cls.user_id == user_id).all()
+        return post_id

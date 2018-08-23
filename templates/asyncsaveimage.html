@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}AsyncSaveImage页{% end %}
+
+
+{% block content %}
+
+    <input type="text" id="imgurl" name="imgurl" placeholder="请输入图片网址" style="width: 300px"><br>
+    <button class="btn btn-success" id="down_imgurl" name="down_imgurl">下载图片</button>
+
+<script type="text/javascript" src="{{ static_url('js/downloadimage.js')}}"></script>
+
+{% end %}

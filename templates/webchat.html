@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block title %}Chat页{% end %}
+
+{% block content %}
+
+      <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .box{
+            width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 25px;
+        }
+        #text{
+            width: 685px;
+            height: 130px;
+            border: 1px solid skyblue;
+            border-radius: 10px;
+            font-size: 20px;
+            text-indent: 1em;
+            resize:none;
+            outline: none;
+        }
+        #text::placeholder{
+            color: skyblue;
+        }
+        .btn{
+            width: 100px;
+            margin: -27px 0 0px 8px;
+        }
+        #messages{
+            padding-left: 10px;
+            font-size: 25px;
+        }
+        #messages li{
+            list-style: none;
+            color: #000;
+            line-height: 30px;
+            font-size: 18px;
+
+        }
+    </style>
+
+    <div class="box">
+        <div>
+            <textarea id="text" placeholder="请输入您的内容"></textarea>
+            <a href="javascript:WebSocketSend();" class="btn btn-primary">发送</a>
+        </div>
+        <ul id="messages">
+        </ul>
+    </div>
+
+<script type="text/javascript" src="{{ static_url('js/websocket_chat.js')}}"></script>
+
+
+
+{% end %}
